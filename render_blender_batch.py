@@ -3,10 +3,13 @@ import sys
 import os
 
 # Path to Blender executable (update this if needed)
-BLENDER_PATH = r"C:\Program Files\Blender Foundation\Blender 3.6\blender.exe"  # Or full path, e.g. r"C:\Program Files\Blender Foundation\Blender 3.6\blender.exe"
+BLENDER_PATH = r"C:\Program Files\Blender Foundation\Blender 3.6\blender.exe"
+
+# Get the absolute path of the current directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Path to your Blender Python script
-generate_views_script = os.path.abspath("generate_views.py")
+generate_views_script = os.path.join(current_dir, "generate_views.py")
 
 # Build the command
 cmd = [
@@ -17,7 +20,8 @@ cmd = [
 
 # Run the command
 try:
-    subprocess.run(cmd, check=True)
+    # Run Blender with the current directory as working directory
+    subprocess.run(cmd, check=True, cwd=current_dir)
 except subprocess.CalledProcessError as e:
     print(f"Blender batch render failed: {e}")
     sys.exit(1) 
